@@ -72,6 +72,17 @@ export default function DashboardPage() {
     setSummarizingId(null);
   };
 
+  const handleUpgrade = async () => {
+    const res = await fetch("/api/checkout", { method: "POST" });
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      alert("Erreur lors de la création de la session de paiement");
+    }
+  };
+
   if (status === "loading") return <p className="p-8">Chargement...</p>;
 
   return (
@@ -81,12 +92,20 @@ export default function DashboardPage() {
           <h1 className="text-2xl font-bold text-gray-900">
             Bonjour, {session?.user?.name || session?.user?.email}
           </h1>
-          <button
-            onClick={() => signOut({ callbackUrl: "/login" })}
-            className="text-sm text-gray-500 hover:text-gray-800"
-          >
-            Se déconnecter
-          </button>
+          <div className="flex items-center gap-4">
+            <button
+              onClick={handleUpgrade}
+              className="rounded bg-yellow-500 px-4 py-1.5 text-sm font-medium text-white hover:bg-yellow-600"
+            >
+              Passer Pro — 9€/mois
+            </button>
+            <button
+              onClick={() => signOut({ callbackUrl: "/login" })}
+              className="text-sm text-gray-500 hover:text-gray-800"
+            >
+              Se déconnecter
+            </button>
+          </div>
         </div>
 
         <form
