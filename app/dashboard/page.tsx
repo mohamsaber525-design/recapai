@@ -83,25 +83,26 @@ export default function DashboardPage() {
     }
   };
 
-  if (status === "loading") return <p className="p-8">Chargement...</p>;
+  if (status === "loading")
+    return <p className="p-8 text-[#5A6A9A]">Chargement...</p>;
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
+    <div className="min-h-screen bg-[#F7F8FC] p-8">
       <div className="mx-auto max-w-3xl">
-        <div className="mb-6 flex items-center justify-between">
-          <h1 className="text-2xl font-bold text-gray-900">
+        <div className="mb-8 flex items-center justify-between">
+          <h1 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-[#1E2761]">
             Bonjour, {session?.user?.name || session?.user?.email}
           </h1>
           <div className="flex items-center gap-4">
             <button
               onClick={handleUpgrade}
-              className="rounded bg-yellow-500 px-4 py-1.5 text-sm font-medium text-white hover:bg-yellow-600"
+              className="rounded-full bg-[#0F8B8D] px-4 py-1.5 text-sm font-medium text-white hover:bg-[#0c7274]"
             >
               Passer Pro — 9€/mois
             </button>
             <button
               onClick={() => signOut({ callbackUrl: "/login" })}
-              className="text-sm text-gray-500 hover:text-gray-800"
+              className="text-sm text-[#5A6A9A] hover:text-[#1E2761]"
             >
               Se déconnecter
             </button>
@@ -110,16 +111,18 @@ export default function DashboardPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="mb-8 space-y-3 rounded-lg bg-white p-6 shadow"
+          className="mb-8 space-y-3 rounded-xl border border-[#E4E9F5] bg-white p-6 shadow-sm"
         >
-          <h2 className="text-lg font-semibold">Nouvelle réunion</h2>
+          <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-[#1E2761]">
+            Nouvelle réunion
+          </h2>
           <input
             type="text"
             placeholder="Titre de la réunion"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
-            className="w-full rounded border px-3 py-2"
+            className="w-full rounded-lg border border-[#E4E9F5] px-3 py-2 text-sm focus:border-[#0F8B8D] focus:outline-none"
           />
           <textarea
             placeholder="Colle ici la transcription de ta réunion..."
@@ -127,43 +130,48 @@ export default function DashboardPage() {
             onChange={(e) => setTranscriptText(e.target.value)}
             required
             rows={6}
-            className="w-full rounded border px-3 py-2"
+            className="w-full rounded-lg border border-[#E4E9F5] px-3 py-2 text-sm focus:border-[#0F8B8D] focus:outline-none"
           />
           <button
             type="submit"
             disabled={loading}
-            className="rounded bg-black px-4 py-2 text-white hover:bg-gray-800 disabled:opacity-50"
+            className="rounded-full bg-[#1E2761] px-5 py-2 text-sm font-medium text-white hover:bg-[#273580] disabled:opacity-50"
           >
             {loading ? "Envoi..." : "Créer la réunion"}
           </button>
         </form>
 
         <div className="space-y-3">
-          <h2 className="text-lg font-semibold">Mes réunions</h2>
+          <h2 className="font-[family-name:var(--font-display)] text-lg font-semibold text-[#1E2761]">
+            Mes réunions
+          </h2>
           {meetings.length === 0 && (
-            <p className="text-gray-500">Aucune réunion pour le moment.</p>
+            <p className="text-sm text-[#5A6A9A]">Aucune réunion pour le moment.</p>
           )}
 
           {meetings.map((m) => (
-            <div key={m.id} className="rounded-lg bg-white p-4 shadow">
+            <div
+              key={m.id}
+              className="rounded-xl border border-[#E4E9F5] bg-white p-4 shadow-sm"
+            >
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="font-medium">{m.title}</p>
-                  <p className="text-sm text-gray-500">Statut : {m.status}</p>
+                  <p className="font-medium text-[#1E2761]">{m.title}</p>
+                  <p className="text-sm text-[#5A6A9A]">Statut : {m.status}</p>
                 </div>
 
                 {m.status === "pending" ? (
                   <button
                     onClick={() => handleSummarize(m.id)}
                     disabled={summarizingId === m.id}
-                    className="rounded bg-blue-600 px-3 py-1.5 text-sm text-white hover:bg-blue-700 disabled:opacity-50"
+                    className="rounded-full bg-[#0F8B8D] px-3 py-1.5 text-sm text-white hover:bg-[#0c7274] disabled:opacity-50"
                   >
                     {summarizingId === m.id ? "Génération..." : "Générer le résumé"}
                   </button>
                 ) : (
                   <a
                     href={`/meetings/${m.id}`}
-                    className="rounded bg-gray-800 px-3 py-1.5 text-sm text-white hover:bg-gray-900"
+                    className="rounded-full bg-[#1E2761] px-3 py-1.5 text-sm text-white hover:bg-[#273580]"
                   >
                     Voir le résumé
                   </a>
