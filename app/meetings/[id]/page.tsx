@@ -2,6 +2,7 @@ import { auth } from "@/auth";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import Link from "next/link";
+import TaskList from "@/components/TaskList";
 
 export default async function MeetingDetailPage({
   params,
@@ -62,39 +63,7 @@ export default async function MeetingDetailPage({
               </p>
             </div>
 
-            <div className="mt-6 rounded-xl border border-[#E4E9F5] bg-white p-6 shadow-sm">
-              <div className="mb-4 flex items-center gap-2">
-                <span className="h-2 w-2 rounded-full bg-[#1E2761]" />
-                <h2 className="font-[family-name:var(--font-display)] font-semibold text-[#1E2761]">
-                  Tâches à faire
-                </h2>
-                <span className="ml-auto rounded-full bg-[#F7F8FC] px-2.5 py-0.5 text-xs font-medium text-[#5A6A9A]">
-                  {meeting.summary.tasks.length}
-                </span>
-              </div>
-              <ul className="space-y-3">
-                {meeting.summary.tasks.map((task) => (
-                  <li
-                    key={task.id}
-                    className="flex items-start gap-3 rounded-lg border border-[#E4E9F5] p-3"
-                  >
-                    <input
-                      type="checkbox"
-                      defaultChecked={task.done}
-                      className="mt-0.5 h-4 w-4 rounded border-[#E4E9F5] accent-[#0F8B8D]"
-                    />
-                    <span className="text-sm text-[#1E2761]">
-                      {task.description}
-                      {task.assignee && (
-                        <span className="ml-2 rounded-full bg-[#CADCFC]/50 px-2 py-0.5 text-xs font-medium text-[#0F8B8D]">
-                          {task.assignee}
-                        </span>
-                      )}
-                    </span>
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <TaskList tasks={meeting.summary.tasks} />
           </>
         ) : (
           <div className="mt-8 rounded-xl border border-dashed border-[#E4E9F5] bg-white p-8 text-center">
